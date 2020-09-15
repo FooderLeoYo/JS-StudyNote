@@ -16,7 +16,7 @@
 
 总体的原则是，this就是调用函数的对象
 
-1. 方法调用模式下
+### 方法调用模式下
 
 this总是指向调用它所在方法的对象
 
@@ -37,14 +37,14 @@ var obj={
 obj.fn(); // 1
 ```
 
-2. 函数调用下或调用方法没有明确对象的时候
+### 函数调用下或调用方法没有明确对象的时候
 
 this指向全局对象，如setTimeout，匿名函数等
 
 这里其实还是属于第一类情况，因为调用者其实就是全局对象，只不过被省略了
 
 ```javascript
- var x="2"
+var x="2"
 // 声明位置
 var fn=function(){
     console.log(this.x)
@@ -54,7 +54,7 @@ var fn=function(){
 fn(); // 2
 ```
 
-3. 构造函数(new)调用模式下
+### 构造函数(new)调用模式下
 
 this指向被new出来的对象
 
@@ -68,7 +68,7 @@ var obj=new Fn()
 console.log(flag==obj) // true
 ```
 
-4. apply,call,bind调用模式下
+### apply,call,bind调用模式下
 
 this指向绑定函数的第一个参数
 
@@ -95,7 +95,7 @@ obj.getName.bind(otherObj)(); // hml
 
 ### 拓展：call()、apply()、bind()的区别
 
-### 首先看三者的语法格式
+#### 首先看三者的语法格式
 
 call()：
 
@@ -115,9 +115,9 @@ bind()：
 let boundFunc = func.bind(thisArg[, argsArray])
 ```
 
-### call 、bind 、 apply这三个函数的第一个参数都是 this 的指向对象
+#### call 、bind 、 apply这三个函数的第一个参数都是 this 的指向对象
 
-### 第二个(或其他)参数是在func有形参时，供其使用的，在call和apply中的区别是：
+#### 第二个(或其他)参数是在func有形参时，供其使用的，在call和apply中的区别是：
 
 1. call 的参数是直接放进去的，第二第三第 n 个参数全都用逗号分隔，直接放到后面
 
@@ -132,9 +132,9 @@ obj.myFun.apply(db,['成都', ..., 'string' ])
 
 ```
 
-### bind 除了返回是函数以外，它的参数和 call 一样
+#### bind 除了返回是函数以外，它的参数和 call 一样
 
-5. 严格模式下
+### 严格模式下
 
 如果this没有被执行环境（execution context）定义，那this是为undefined
 
