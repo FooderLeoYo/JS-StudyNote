@@ -8,6 +8,8 @@
 
 [绑定规则优先级](#jump2)
 
+[多次bind](#jump4)
+
 ---	
 
 <span id="jump1"></span>
@@ -243,3 +245,20 @@ obj.a.call('123')  //打出来的结果依然是window对象
 是否在某个上下文对象中调用(隐式绑定)?如果是的话,this绑定的是那个上下文对象。
 
 如果都不是的话,使用默认绑定。如果在严格模式下,就绑定到undefined,否则绑定到 全局对象。
+
+---
+
+<span id="jump4"></span>
+
+## 多次bind
+
+不管我们给函数 bind 几次，fn 中的 this 永远由第一次 bind 决定
+
+```javascript
+let a = {};
+let fn = function () {
+  console.log(this);
+};
+
+fn.bind().bind(a)(); // => window
+```
