@@ -18,8 +18,6 @@
 
 [Screen 对象](#jump8)
 
-[offsetWidth/offsetHeight,clientWidth/clientHeight 与 scrollWidth/scrollHeight 的区别](#jump9)
-
 ---	
 
 <span id="jump1"></span>
@@ -242,15 +240,3 @@ Screen 对象包含有关客户端显示屏幕的信息
 | pixelDepth | 返回显示屏幕的颜色分辨率（比特每像素） |
 | updateInterval | 设置或返回屏幕的刷新率（仅 IE11 以下支持） |
 | width | 返回显示器屏幕的宽度 |
-
----
-
-<span id="jump9"></span>
-
-## offsetWidth/offsetHeight,clientWidth/clientHeight 与 scrollWidth/scrollHeight 的区别
-
-- offsetWidth/offsetHeight 返回值包含 content + padding + border，效果与 e.getBoundingClientRect()相同
-
-- clientWidth/clientHeight 返回值只包含 content + padding，如果有滚动条，也不包含滚动条
-
-- scrollWidth/scrollHeight 返回值包含 content + padding + 溢出内容的尺寸
