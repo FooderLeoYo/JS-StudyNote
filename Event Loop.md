@@ -110,6 +110,8 @@
 
 是，结束
 
+![浏览器中的事件循环流程](https://raw.githubusercontent.com/FooderLeoYo/JS-StudyNote/master/assets/imgs/%E6%B5%8F%E8%A7%88%E5%99%A8%E4%B8%AD%E7%9A%84%E4%BA%8B%E4%BB%B6%E5%BE%AA%E7%8E%AF%E6%B5%81%E7%A8%8B.jpg)
+
 ### 例题
 
 题目：
