@@ -1,0 +1,250 @@
+# 基本语法
+
+## 目录
+
+[什么是Ajax](#jump1)
+
+[Ajax运行原理及实现](#jump2)
+                      
+[请求参数的传递](#jump3)
+
+[Ajax错误处理](#jump4)
+
+[封装Ajax请求函数](#jump5)
+
+[案例：验证邮箱](#jump6)
+
+[案例：验证邮箱](#jump7)
+
+[案例：验证邮箱](#jump8)
+
+---	
+
+<span id="jump1"></span>
+
+## 什么是Ajax
+
+### 概念
+
+它是浏览器提供的一套方法，可以实现页面无刷新更新数据，提高用户浏览网站应用的体验
+
+### 应用场景
+
+页面上拉加载更多数据
+
+列表数据无刷新分页
+
+表单项离开焦点数据验证
+
+搜索框提示文字下拉列表
+
+---
+
+<span id="jump2"></span>
+
+## Ajax运行原理及实现
+
+### Ajax 运行原理
+
+Ajax 相当于浏览器发送请求与接收响应的代理人，以实现在不影响用户浏览页面的情况下，局部更新页面数据，从而提高用户体验
+
+### Ajax 的实现步骤
+
+#### 客户端
+
+1.  创建 Ajax 对象
+
+```javascript
+ let xhr = new XMLHttpRequest();
+
+```
+
+2.  告诉 Ajax 请求地址以及请求方式
+
+```javascript
+ xhr.open('get', 'http://www.example.com');
+```
+
+3.  发送请求
+
+```javascript
+ xhr.send();
+```
+
+4.  获取服务器端给与客户端的响应数据
+
+```javascript
+ xhr.onload = () => console.log(xhr.responseText);
+```
+
+### 服务器端响应的数据格式
+
+在 http 请求与响应的过程中，如果是对象类型，最终都会被转换为字符串进行传输
+
+因此客户端要先对拿到的字符串转换为Json对象，才能正常使用该数据
+
+```javascript
+JSON.parse() // 将 json 字符串转换为Json对象
+```
+
+### 请求报文
+
+在 HTTP 请求和响应的过程中传递的数据块就叫报文，包括要传送的数据和一些附加信息，这些数据和信息要遵守规定好的格式
+
+---
+
+<span id="jump3"></span>
+
+## 请求参数的传递
+
+不同于传统网站表单提交，ajax请求的query请求参数需要自行获取后进行拼接
+
+### GET 请求方式：
+
+- get请求的请求参数是放在.open方法中的
+
+```javascript
+// 创建ajax对象
+var xhr = new XMLHttpRequest();
+// 获取用户在文本框中输入的值
+var nameValue = username.value;
+var ageValue = age.value;
+// 拼接请求参数
+var params = 'username='+ nameValue +'&age=' + ageValue;
+// 配置ajax对象
+xhr.open('get', 'http://localhost:3000/get?'+params);
+// 发送请求
+xhr.send();
+```
+
+### POST 请求方式
+
+- post请求的请求参数是放在.send方法中的
+
+- post请求必须要设置请求参数格式的类型
+
+```javascript
+// 创建ajax对象
+var xhr = new XMLHttpRequest();
+// 获取用户在文本框中输入的值
+var nameValue = username.value;
+var ageValue = age.value;
+// 拼接请求参数
+var params = 'username='+ nameValue +'&age=' + ageValue;
+// 配置ajax对象
+xhr.open('post', 'http://localhost:3000/post');
+// 设置请求参数格式的类型（post请求必须要设置）
+xhr.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
+// 发送请求
+xhr.send(params);
+```
+
+### 请求参数的格式
+
+#### application/x-www-form-urlencoded
+
+适用于以下格式的请求参数
+
+```javascript
+name=zhangsan&age=20&sex=男
+```
+
+#### application/json
+
+适用于以下格式的请求参数
+
+```javascript
+{name: 'zhangsan', age: '20', sex: '男'}
+```
+
+要点：
+
+1. 请求方式必须是post，不适用于get
+2. 在请求头中指定 Content-Type 属性的值是 application/json，告诉服务器端当前请求参数的格式是 json
+3. 需要先将json对象转换为json字符串，才能send
+
+```javascript
+// 1.创建ajax对象
+var xhr = new XMLHttpRequest();
+// 请求方式必须是post，不适用于get
+xhr.open('post', 'http://localhost:3000/json');
+// 通过请求头告诉服务器端客户端向服务器端传递的请求参数的格式是什么
+xhr.setRequestHeader('Content-Type', 'application/json');
+// JSON.stringify() 将json对象转换为json字符串
+// 3.发送请求
+xhr.send(JSON.stringify({name: 'lisi', age:50}));
+```
+
+注意：get 请求是不能提交 json 对象数据格式的，因此只能使用第一种请求参数格式
+
+---
+
+<span id="jump4"></span>
+
+## Ajax错误处理
+
+1. 网络畅通，服务器端能接收到请求，服务器端返回的结果不是预期结果
+
+解决方案：可以判断服务器端返回的状态码，分别进行处理。xhr.status 获取http状态码
+
+2. 网络畅通，服务器端没有接收到请求，返回404状态码
+
+解决方案：检查请求地址是否错误
+
+3. 网络畅通，服务器端能接收到请求，服务器端返回500状态码
+
+解决方案：服务器端错误，找后端程序员进行沟通
+
+4. 网络中断，请求无法发送到服务器端
+
+解决方案：会触发xhr对象下面的onerror事件，在onerror事件处理函数中对错误进行处理
+
+---
+
+<span id="jump5"></span>
+
+## 封装Ajax请求函数
+
+问题：发送一次请求代码过多，发送多次请求代码冗余且重复。
+
+解决方案：将请求代码封装到函数中，发请求时调用函数即可。
+
+封装函数：
+
+[Ajax请求函数](https://github.com/FooderLeoYo/Ajax-StudyNote/blob/master/assets/projects/%E5%B0%81%E8%A3%85Ajax%E8%AF%B7%E6%B1%82%E5%87%BD%E6%95%B0.js)
+
+使用：
+
+```javascript
+ ajax({ 
+     type: 'get',
+     url: 'http://www.example.com',
+     success: function (data) { 
+         console.log(data);
+     }
+ })
+```
+
+---
+
+<span id="jump6"></span>
+
+## 案例：验证邮箱
+
+[验证邮箱地址唯一性](https://github.com/FooderLeoYo/Ajax-StudyNote/tree/master/assets/projects/验证邮箱地址唯一性)
+
+---
+
+<span id="jump7"></span>
+
+## 案例：搜索提示
+
+[搜索框内容自动提示](https://github.com/FooderLeoYo/Ajax-StudyNote/tree/master/assets/projects/搜索框内容自动提示)
+
+---
+
+<span id="jump8"></span>
+
+## 案例：省市区联动
+
+[省市区联动](https://github.com/FooderLeoYo/Ajax-StudyNote/tree/master/assets/projects/省市区联动)
