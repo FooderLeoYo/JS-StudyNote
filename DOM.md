@@ -14,9 +14,7 @@
 
 [添加、移除、移动、复制、创建和查找节点](#jump6)
 
-[documen.write 和 innerHTML 的区别](#jump7)
-
-[Window 对象 与 document 对象](#jump8)
+[Window 对象 与 document 对象](#jump7)
 
 ---	
 
@@ -201,19 +199,9 @@ domElement.addEvent('student', function(e){
 
 - 通过元素 Id，唯一性：getElementById()
 
----
-
-<span id="jump7"></span>
-
-## documen.write 和 innerHTML 的区别
-
-- document.write 只能重绘整个页面
-
-- innerHTML 可以重绘页面的一部分
-
  ---
 
-<span id="jump8"></span>
+<span id="jump7"></span>
 
 ## Window 对象 与 document 对象
 
