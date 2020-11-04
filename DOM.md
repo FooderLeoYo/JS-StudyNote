@@ -2,8 +2,6 @@
 
 ## 目录
 
-[DOM 事件级别](#jump1)
-
 [DOM 事件模型](#jump2)
 
 [Event对象常见属性及方法](#jump3)
@@ -15,43 +13,6 @@
 [添加、移除、移动、复制、创建和查找节点](#jump6)
 
 [Window 对象 与 document 对象](#jump7)
-
----	
-
-<span id="jump1"></span>
-
-## DOM 事件级别
-
-### DOM0
-
-- onXXX 类型的定义事件
-
-- element.onclick = function(e) { ... }
-
-### DOM1
-
-DOM1一般只有设计规范没有具体实现，所以一般跳过
-
-### DOM2
-
-- addEventListener方式
-
-- attachEvent方式(IE下)
-
-### DOM3
-
-DOM3级事件在DOM2级事件的基础上添加了更多的事件类型，全部类型如下：
-
-| 事件类型 | 说明 | 举例 |
-| --- | --- | --- |
-| UI事件 | 当用户与页面上的元素交互时触发 | load、scroll |
-| 焦点事件 | 当元素获得或失去焦点时触发 | blur、focus |
-| 鼠标事件 | 当用户通过鼠标在页面执行操作时触发 | dbclick、mouseup |
-| 滚轮事件 | 当使用鼠标滚轮或类似设备时触发 | mousewheel |
-| 文本事件 | 当在文档中输入文本时触发 | textInput |
-| 键盘事件 | 当用户通过键盘在页面上执行操作时触发 | keydown、keypress |
-| 合成事件 | 当为IME（输入法编辑器）输入字符时触发 | compositionstart |
-| 变动事件 | 当底层DOM结构发生变化时触发 | DOMsubtreeModified |
 
 ---
 
