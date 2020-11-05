@@ -2,6 +2,8 @@
 
 ## 目录
 
+[DOM是什么](#jump1)
+
 [DOM 事件模型](#jump2)
 
 [Event对象常见属性及方法](#jump3)
@@ -13,6 +15,20 @@
 [添加、移除、移动、复制、创建和查找节点](#jump6)
 
 [Window 对象 与 document 对象](#jump7)
+
+---
+
+<span id="jump1"></span>
+
+## DOM是什么
+
+浏览器将HTML解析成树形的数据结构，Document Object Model，简称DOM
+
+类似的，浏览器将CSS代码解析成树形的数据结构，CSS Object Model，简称CSSOM
+
+DOM 和 CSSOM 合并后生成 Render Tree
+
+DOM 树的构建过程是一个深度遍历过程：当前节点的所有子节点都构建好后才会去构建当前节点的下一个兄弟节点
 
 ---
 
