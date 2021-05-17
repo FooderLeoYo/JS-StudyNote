@@ -252,9 +252,8 @@ function add(...values) { // 使用剩余参数后，声明时写一个剩余参
   return sum;
 }
 
-
 add(2, 5, 3); // 调用的时候，传递的实参个数则可以是任意的
----
+```
 
 ### 其他注意点
 
@@ -274,6 +273,8 @@ function f(a, ...b, c) {
 (function(...a) {}).length  // 0
 (function(a, ...b) {}).length  // 1
 ```
+
+---
 
 <span id="jump6"></span>
 
