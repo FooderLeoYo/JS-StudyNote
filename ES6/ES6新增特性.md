@@ -278,22 +278,26 @@ function f(a, ...b, c) {
 
 <span id="jump6"></span>
 
-## 扩展运算符.
+## 扩展运算符
 
-扩展运算符用于取出等号右边的参数中的所有可遍历属性，拷贝到等号左边的对象之中
+扩展运算符（spread）是三个点（...）
 
-扩展运算符内部调用的是数据结构的 Iterator 接口，因此只要具有 Iterator 接口的对象，都可以使用扩展运算符，比如 Map 结构
-
-### 对象的扩展运算符
+它好比 rest 参数的逆运算，将一个数组转为用逗号分隔的参数序列
 
 ```javascript
-let bar = { a: 1, b: 2 };
-let baz = { ...bar }; // { a: 1, b: 2 }
+console.log(...[1, 2, 3])
+// 1 2 3
+
+console.log(1, ...[2, 3, 4], 5)
+// 1 2 3 4 5
+
+[...document.querySelectorAll('div')]
+// [<div>, <div>, <div>]
 ```
 
-### 数组的扩展运算符
+### 扩展运算符的应用
 
-1. 可以将数组转换为参数序列
+#### 将数组转换为参数序列
 
 ```javascript
 function add(x, y) {
@@ -304,32 +308,83 @@ const numbers = [4, 38];
 add(...numbers) // 42
 ```
 
-2. 可以复制数组
+#### 复制数组
+
+数组是复合的数据类型，直接复制的话，只是复制了指向底层数据结构的指针，而不是克隆一个全新的数组
 
 如果直接通过下列的方式进行数组复制是不可取的：
 
 ```javascript
-// 错误
-const arr1 = [1, 2];
-const arr2 = arr1;
-arr2[0] = 2;
-arr1 // [2, 2]
+const a1 = [1, 2];
+const a2 = a1;
+
+a2[0] = 2;
+a1 // [2, 2]
+```
+
+ES5 只能用变通方法来复制数组：
+
+```javascript
+const a1 = [1, 2];
+const a2 = a1.concat();
+
+a2[0] = 2;
+a1 // [1, 2]
 ```
 
 用扩展运算符就很方便：
 
 ```javascript
-// 正确
-const arr1 = [1, 2];
-const arr2 = [...arr1];
+const a1 = [1, 2];
+// 写法一
+const a2 = [...a1];
+// 写法二
+const [...a2] = a1;
 ```
 
-3. 与解构赋值结合起来，用于生成数组
+#### 合并数组
+
+扩展运算符提供了数组合并的新写法
 
 ```javascript
-const [first, ...rest] = [1, 2, 3, 4, 5];
-first // 1
-rest  // [2, 3, 4, 5]
+const arr1 = ['a', 'b'];
+const arr2 = ['c'];
+const arr3 = ['d', 'e'];
+
+// ES5 的合并数组
+arr1.concat(arr2, arr3);
+// [ 'a', 'b', 'c', 'd', 'e' ]
+
+// ES6 的合并数组
+[...arr1, ...arr2, ...arr3]
+// [ 'a', 'b', 'c', 'd', 'e' ]
+```
+
+不过，这两种方法都是浅拷贝，使用的时候需要注意
+
+```javascript
+const a1 = [{ foo: 1 }];
+const a2 = [{ bar: 2 }];
+
+const a3 = a1.concat(a2);
+const a4 = [...a1, ...a2];
+
+a3[0] === a1[0] // true
+a4[0] === a1[0] // true
+```
+
+a3和a4是用两种不同方法合并而成的新数组，但是它们的成员都是对原数组成员的引用，这就是浅拷贝
+
+#### 与解构赋值结合
+
+扩展运算符可以与解构赋值结合起来，用于生成数组
+
+```javascript
+// ES5
+let a = list[0];
+let rest = list.slice(1);
+// ES6
+let [a, ...rest] = list;
 ```
 
 注意：如果将扩展运算符用于数组赋值，只能放在参数的最后一位，否则会报错
@@ -341,12 +396,25 @@ const [first, ...rest, last] = [1, 2, 3, 4, 5];
 // 报错
 ```
 
-4. 将字符串转为真正的数组
+#### 字符串
+
+扩展运算符还可以将字符串转为真正的数组
 
 ```javascript
 [...'hello']
 // [ "h", "e", "l", "l", "o" ]
 ```
+
+#### 实现了 Iterator 接口的对象
+
+任何定义了遍历器（Iterator）接口的对象，都可以用扩展运算符转为真正的数组
+
+```javascript
+let nodeList = document.querySelectorAll('div');
+let array = [...nodeList];
+```
+
+上面代码中，querySelectorAll方法返回的是一个NodeList对象。它不是数组，而是一个类似数组的对象。这时，扩展运算符可以将其转为真正的数组，原因就在于NodeList对象实现了 Iterator
 
 ---
 
